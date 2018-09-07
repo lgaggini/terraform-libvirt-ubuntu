@@ -2,7 +2,7 @@ provider "libvirt" {
   uri = "qemu:///system"
 }
 
-module "ubuntu-libvirt_1" {
+module "libvirt-ubuntu_1" {
   source = "../.."   
 
   hostname = "tf_test"
@@ -18,7 +18,7 @@ module "ubuntu-libvirt_1" {
   }
 }
 
-module "ubuntu-libvirt_2" {
+module "libvirt-ubuntu_2" {
   source = "../.."   
 
   hostname = "tf_test2"
