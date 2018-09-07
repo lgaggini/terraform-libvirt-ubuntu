@@ -1,0 +1,64 @@
+# cloud-config
+hostname: tftest
+fqdn: tftest.lgaggini.net
+manage_etc_hosts: true
+
+write_files:
+  - path: /etc/netplan/01-internal-network.yaml
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens3:
+            dhcp4: no
+            addresses: [192.168.0.2/24]
+  - path: /etc/netplan/02-private-network.yaml
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens4:
+            dhcp4: no
+            addresses: [10.0.0.2/24]
+            gateway4: 10.0.0.1
+            nameservers:
+              addresses: [10.0.0.1]
+  - path: /etc/netplan/03-public-network.yaml
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens5:
+            dhcp6: no
+            addresses: ["2a01:4f8:212:5cf::3/64"]
+            gateway6: "2a01:4f8:212:5cf::2"
+
+chpasswd:
+  list: |
+    ubuntu:ubuntu
+  expire: False
+
+disk_setup:
+  /dev/vdb:
+    table_type: 'mbr'
+    layout:
+      - 100
+    overwrite: true
+
+fs_setup:
+  - label: data
+    filesystem: 'ext4'
+    device: '/dev/vdb'
+    partition: 1
+    overwrite: true
+
+mounts:
+  - [ /dev/vdb1, /mnt ]
+
+runcmd:
+ - [ netplan, generate ]
+ - [ netplan, apply ]
+
