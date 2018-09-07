@@ -8,6 +8,5 @@ Virtual machine deployed have 3 networks and two lvm disks (one for os where the
 ```bash
 git clone https://github.com/lgaggini/terraform-libvirt-ubuntu
 ```
-## Configuration
-
-## Usage
+## Configuration and usage
+See the [examples folder](https://github.com/lgaggini/terraform-libvirt-ubuntu/tree/master/examples) for a simple use case.
