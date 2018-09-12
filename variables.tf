@@ -40,3 +40,14 @@ variable "networks_addr" {
   type = "map"
 }
 
+# start the virtual machine after creation
+variable "running" {
+  type = "string"
+  default = "false"
+}
+
+# start the virtual machine at boot
+variable "autostart" {
+  type = "string"
+  default = "false"
+}

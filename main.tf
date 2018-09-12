@@ -25,8 +25,8 @@ resource "libvirt_domain" "host" {
   metadata = "${var.metadata}"
   vcpu = "${var.vcpu}"
   memory = "${var.memory}"
-  running = false
-  autostart = false
+  running = "${var.running}"
+  autostart = "${var.autostart}"
 
   cloudinit = "${libvirt_cloudinit.cloudinit.id}"
 
