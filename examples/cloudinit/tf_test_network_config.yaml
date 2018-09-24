@@ -1,0 +1,15 @@
+version: 2
+  ethernets:
+    ens3:
+      dhcp4: no
+      addresses: [192.168.0.3/24]
+    ens4:
+      dhcp4: no
+      addresses: [10.0.0.3/24]
+      gateway4: 10.0.0.1
+      nameservers:
+        addresses: [10.0.0.1]
+    ens5:
+      dhcp6: no
+      addresses: ["2a01:4f8:212:5cf::4/64"]
+      gateway6: "2a01:4f8:212:5cf::2"
