@@ -11,11 +11,19 @@ resource "libvirt_volume" "data" {
   format = "raw"
 }
 
-resource "libvirt_cloudinit" "cloudinit" {
+resource "libvirt_cloudinit_disk" "cloudinit" {
   name = "${var.hostname}_cloudinit.iso"
   pool = "kvm_storage_pool"
-  local_hostname = "${var.hostname}"
-  user_data = "${file("cloudinit/${var.hostname}_user_data.yaml")}"
+  user_data = "${data.template_file.user_data.rendered}"
+  network_config = "${data.template_file.network_config.rendered}"
+}
+
+data "template_file" "user_data" {
+  template = "${file("cloudinit/${var.hostname}_user_data.cfg")}"
+}
+
+data "template_file" "network_config" {
+  template = "${file("cloudinit/${var.hostname}_network_config.cfg")}"
 }
 
 resource "libvirt_domain" "host" {
@@ -28,7 +36,7 @@ resource "libvirt_domain" "host" {
   running = "${var.running}"
   autostart = "${var.autostart}"
 
-  cloudinit = "${libvirt_cloudinit.cloudinit.id}"
+  cloudinit = "${libvirt_cloudinit_disk.cloudinit.id}"
 
   # file systems
   disk {
