@@ -10,9 +10,9 @@ variable "metadata" {
 }
 
 # ubuntu cloud image version, used to retrieve the image from the file system
-variable "ubuntu_version" {
+variable "arch_version" {
   type = "string"
-  default = "18.04"
+  default = "latest"
 }
 
 # virtual cpu(s) available for the virtual machine
